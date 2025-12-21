@@ -2,11 +2,11 @@
 
 ## Dataset Overview
 
-**File**: `WDI_G20_2010-2024.csv`
-**Location**: `/home/felladog/Desktop/LabUAH/BMC_spec/WDI_Dataset/`
+**File**: `WDI_G20_2003-2023.csv`
+**Location**: `WDI_Dataset/`
 **Extraction Date**: 2025-12-21
 **Source**: World Bank World Development Indicators (WDI) via wbgapi
-**File Size**: 70 KB
+**File Size**: ~90 KB
 **Format**: Wide-format CSV
 
 ## Purpose
@@ -17,19 +17,20 @@ This dataset provides a clean, representative subset of World Bank development i
 
 ### Dimensions
 - **Rows**: 304 (17 indicators × 19 countries, excluding header)
-- **Columns**: 19 total
-  - 4 metadata columns (Country code, series code, Country name, Series name)
-  - 15 year columns (2010-2024)
+- **Columns**: 26 total
+  - 5 metadata columns (CountryCode, CountryName, IndicatorCode, IndicatorName, OriginalIndicatorName)
+  - 21 year columns (2003-2023)
 
 ### Schema
 
 | Column | Type | Description | Example |
 |--------|------|-------------|---------|
-| `Country` (code) | string | ISO 3166-1 alpha-3 country code | USA, GBR, CHN |
-| `series` | string | WDI indicator code (CETS format) | SP.DYN.LE00.IN |
-| `Country` (name) | string | Full country name | United States |
-| `Series` | string | Full indicator description | Life expectancy at birth, total (years) |
-| `2010`-`2024` | float | Annual values for each year | 78.54, 80.40, etc. |
+| `CountryCode` | string | ISO 3166-1 alpha-3 country code | USA, GBR, CHN |
+| `CountryName` | string | Full country name | United States |
+| `IndicatorCode` | string | WDI indicator code | SP.DYN.LE00.IN |
+| `IndicatorName` | string | Simplified human-readable indicator name | Life_Expectancy |
+| `OriginalIndicatorName` | string | Full indicator description | Life expectancy at birth, total (years) |
+| `2003`-`2023` | float | Annual values for each year | 77.04, 78.45, etc. |
 
 ### Data Format
 - **Type**: Wide format (years as columns)
@@ -40,49 +41,49 @@ This dataset provides a clean, representative subset of World Bank development i
 
 ### Zone 1: Health (3 indicators)
 
-| Code | Name | Coverage | Unit |
-|------|------|----------|------|
-| `SP.DYN.LE00.IN` | Life expectancy at birth | Excellent (99%+) | Years |
-| `SP.DYN.IMRT.IN` | Infant mortality rate | Excellent (99%+) | Per 1,000 live births |
-| `SH.STA.MMRT` | Maternal mortality ratio | Good (95%+) | Per 100,000 births |
+| Code | Name | Coverage | Unit | Simplified Name |
+|------|------|----------|------|-----------------|
+| `SP.DYN.LE00.IN` | Life expectancy at birth | Excellent (99%+) | Years | Life_Expectancy |
+| `SP.DYN.IMRT.IN` | Infant mortality rate | Excellent (99%+) | Per 1,000 live births | Infant_Mortality |
+| `SH.STA.MMRT` | Maternal mortality ratio | Good (95%+) | Per 100,000 births | Maternal_Mortality |
 
 ### Zone 2: Economy (4 indicators)
 
-| Code | Name | Coverage | Unit |
-|------|------|----------|------|
-| `NY.GDP.MKTP.CD` | GDP (current US$) | Excellent (99%+) | Current USD |
-| `NY.GDP.PCAP.PP.CD` | GDP per capita, PPP | Excellent (99%+) | International $ |
-| `SL.UEM.TOTL.ZS` | Unemployment rate | Excellent (99%+) | % of labor force |
-| `NE.TRD.GNFS.ZS` | Trade (% of GDP) | Excellent (99%+) | % of GDP |
+| Code | Name | Coverage | Unit | Simplified Name |
+|------|------|----------|------|-----------------|
+| `NY.GDP.MKTP.CD` | GDP (current US$) | Excellent (99%+) | Current USD | GDP_Current_USD |
+| `NY.GDP.PCAP.PP.CD` | GDP per capita, PPP | Excellent (99%+) | International $ | GDP_Per_Capita_PPP |
+| `SL.UEM.TOTL.ZS` | Unemployment rate | Excellent (99%+) | % of labor force | Unemployment_Rate |
+| `NE.TRD.GNFS.ZS` | Trade (% of GDP) | Excellent (99%+) | % of GDP | Trade_Pct_GDP |
 
 ### Zone 3: Environment (2 indicators)
 
-| Code | Name | Coverage | Unit |
-|------|------|----------|------|
-| `AG.LND.FRST.ZS` | Forest area | Good (95%+) | % of land area |
-| `EG.FEC.RNEW.ZS` | Renewable energy consumption | Good (95%+) | % of total |
+| Code | Name | Coverage | Unit | Simplified Name |
+|------|------|----------|------|-----------------|
+| `AG.LND.FRST.ZS` | Forest area | Good (95%+) | % of land area | Forest_Area_Pct |
+| `EG.FEC.RNEW.ZS` | Renewable energy consumption | Good (95%+) | % of total | Renewable_Energy_Pct |
 
 ### Zone 4: Infrastructure (3 indicators)
 
-| Code | Name | Coverage | Unit |
-|------|------|----------|------|
-| `EG.ELC.ACCS.ZS` | Access to electricity | Excellent (99%+) | % of population |
-| `IT.NET.USER.ZS` | Internet users | Excellent (99%+) | % of population |
-| `IT.CEL.SETS.P2` | Mobile subscriptions | Excellent (99%+) | Per 100 people |
+| Code | Name | Coverage | Unit | Simplified Name |
+|------|------|----------|------|-----------------|
+| `EG.ELC.ACCS.ZS` | Access to electricity | Excellent (99%+) | % of population | Electricity_Access_Pct |
+| `IT.NET.USER.ZS` | Internet users | Excellent (99%+) | % of population | Internet_Users_Pct |
+| `IT.CEL.SETS.P2` | Mobile subscriptions | Excellent (99%+) | Per 100 people | Mobile_Subscriptions_Per100 |
 
 ### Zone 5: Education (2 indicators)
 
-| Code | Name | Coverage | Unit |
-|------|------|----------|------|
-| `SE.PRM.ENRR` | Primary school enrollment | Excellent (99%+) | % gross |
-| `SE.SEC.ENRR` | Secondary school enrollment | Excellent (99%+) | % gross |
+| Code | Name | Coverage | Unit | Simplified Name |
+|------|------|----------|------|-----------------|
+| `SE.PRM.ENRR` | Primary school enrollment | Excellent (99%+) | % gross | Primary_Enrollment_Pct |
+| `SE.SEC.ENRR` | Secondary school enrollment | Excellent (99%+) | % gross | Secondary_Enrollment_Pct |
 
 ### Zone 6: Demographics (2 indicators)
 
-| Code | Name | Coverage | Unit |
-|------|------|----------|------|
-| `SP.POP.TOTL` | Total population | Excellent (100%) | Count |
-| `SP.URB.TOTL.IN.ZS` | Urban population | Excellent (99%+) | % of total |
+| Code | Name | Coverage | Unit | Simplified Name |
+|------|------|----------|------|-----------------|
+| `SP.POP.TOTL` | Total population | Excellent (100%) | Count | Population_Total |
+| `SP.URB.TOTL.IN.ZS` | Urban population | Excellent (99%+) | % of total | Urban_Population_Pct |
 
 ## Countries Covered
 
@@ -114,68 +115,30 @@ This dataset provides a clean, representative subset of World Bank development i
 
 ## Temporal Coverage
 
-### Year Range: 2010-2024 (15 years)
-
-### Data Completeness by Year
-
-| Year | Non-Null Values | Completeness |
-|------|----------------|--------------|
-| 2010 | 294/304 | 96.7% |
-| 2011 | 296/304 | 97.4% |
-| 2012 | 298/304 | 98.0% |
-| 2013 | 301/304 | 99.0% |
-| 2014 | 302/304 | 99.3% |
-| 2015 | 303/304 | 99.7% |
-| 2016 | 302/304 | 99.3% |
-| 2017 | 303/304 | 99.7% |
-| 2018 | 303/304 | 99.7% |
-| 2019 | 303/304 | 99.7% |
-| 2020 | 303/304 | 99.7% |
-| 2021 | 302/304 | 99.3% |
-| 2022 | 284/304 | 93.4% |
-| 2023 | 275/304 | 90.5% |
-| 2024 | 132/304 | 43.4% |
-
-**Coverage Patterns**:
-- **2013-2021**: Peak data availability (99%+ completeness)
-- **2010-2012**: Slightly lower but still excellent (96-98%)
-- **2022-2023**: Good coverage but declining as recent data is finalized (90-93%)
-- **2024**: Partial coverage (43%) - data collection in progress
+### Year Range: 2003-2023 (21 years)
 
 ## Data Quality Notes
 
 ### Missing Data Patterns
 
-1. **Recent Years (2022-2024)**: Expected lag as countries finalize statistics
-   - National accounts: Usually complete within 12 months
-   - Health/education: 18-24 month lag common
-   - Environmental: Can lag 24-36 months
-
+1. **Recent Years (2022-2023)**: Expected lag as countries finalize statistics.
 2. **Indicator-Specific Gaps**:
-   - Maternal mortality: Survey-dependent, some gaps in 2010-2012
-   - Renewable energy: Some gaps in early years (2010-2012)
-   - Education enrollment: Generally complete across all years
+   - Maternal mortality: Survey-dependent.
+   - Renewable energy: Some gaps in earlier years.
+   - Education enrollment: Generally complete.
 
 3. **Country-Specific Gaps**:
-   - Russia: Some indicators affected by geopolitical factors post-2020
-   - Saudi Arabia: Historically limited transparency in certain indicators
+   - Russia: Some indicators affected by geopolitical factors.
+   - Saudi Arabia: Historically limited transparency in certain indicators.
 
 ### Known Issues
 
 1. **Missing CO2 Emissions Indicator**:
-   - `EN.ATM.CO2E.PC` was requested but not returned by API
-   - Possible causes: API restrictions, indicator code changes, or data embargo
-   - **Recommendation**: Check for alternative codes or use CAIT/EDGAR datasets
+   - `EN.ATM.CO2E.PC` was requested but not returned by API.
+   - **Recommendation**: Check for alternative codes or use CAIT/EDGAR datasets.
 
-2. **Duplicate Column Names**:
-   - Both country code and country name columns labeled "Country"
-   - Both indicator code and indicator name columns labeled differently
-   - **Recommendation**: Rename columns when loading for analysis
-
-3. **2024 Data Availability**:
-   - Only 43% complete as of extraction date (Dec 2025)
-   - Most missing values are expected and will be filled throughout 2025-2026
-   - **Recommendation**: Focus analysis on 2010-2023 for complete time series
+2. **Duplicate Column Names (Mitigated)**:
+   - Extraction script now handles duplicates and ensures unique, descriptive column names (`CountryName`, `CountryCode`, `IndicatorName`).
 
 ## Usage Guidelines
 
@@ -186,87 +149,17 @@ This dataset provides a clean, representative subset of World Bank development i
 import pandas as pd
 
 # Load data
-df = pd.read_csv('WDI_G20_2010-2024.csv')
+df = pd.read_csv('WDI_Dataset/WDI_G20_2003-2023.csv')
 
-# Rename duplicate columns for clarity
-df.columns = ['country_code', 'indicator_code', 'country_name',
-              'indicator_name'] + [str(y) for y in range(2010, 2025)]
-
-# Convert to long format for visualization
-df_long = df.melt(
-    id_vars=['country_code', 'country_name', 'indicator_code', 'indicator_name'],
-    var_name='year',
-    value_name='value'
-)
-df_long['year'] = df_long['year'].astype(int)
-```
-
-**R (tidyverse)**:
-```r
-library(tidyverse)
-
-# Load data
-df <- read_csv('WDI_G20_2010-2024.csv')
-
-# Rename columns
-colnames(df) <- c('country_code', 'indicator_code', 'country_name',
-                  'indicator_name', paste0('y', 2010:2024))
-
-# Convert to long format
-df_long <- df %>%
-  pivot_longer(
-    cols = starts_with('y'),
-    names_to = 'year',
-    values_to = 'value',
-    names_prefix = 'y'
-  ) %>%
-  mutate(year = as.integer(year))
+# Convert to long format for visualization (or use the pre-generated long file)
+# The pre-generated long file is 'WDI_Dataset/WDI_G20_2003-2023_long.csv'
 ```
 
 ### Recommended Transformations
 
-1. **Long Format Conversion**: Most visualization tools (Vega-Lite, ggplot2, Tableau) work better with long format where each row is one observation (country-indicator-year combination).
+1. **Long Format Conversion**: The dataset comes with a `convert_to_long.py` script to generate a long-format CSV suitable for visualization tools like Vega-Lite. This file (`WDI_G20_2003-2023_long.csv`) includes a `Zone` column for thematic filtering.
 
-2. **Column Renaming**: Address duplicate column names for clarity.
-
-3. **Year Filtering**: Focus on 2010-2023 for complete time series analysis, or 2013-2021 for maximum completeness.
-
-4. **Missing Value Handling**:
-   - **Linear interpolation**: Suitable for stable indicators (forest area, infrastructure)
-   - **Median imputation**: Use regional/income-group medians for sparse data
-   - **Explicit exclusion**: Remove rows with missing values for critical analyses
-
-5. **Zone Tagging**: Add a "zone" column to enable thematic filtering:
-   ```python
-   zone_map = {
-       'SP.DYN.LE00.IN': 'Health', 'SP.DYN.IMRT.IN': 'Health', 'SH.STA.MMRT': 'Health',
-       'NY.GDP.MKTP.CD': 'Economy', 'NY.GDP.PCAP.PP.CD': 'Economy',
-       'SL.UEM.TOTL.ZS': 'Economy', 'NE.TRD.GNFS.ZS': 'Economy',
-       'AG.LND.FRST.ZS': 'Environment', 'EG.FEC.RNEW.ZS': 'Environment',
-       'EG.ELC.ACCS.ZS': 'Infrastructure', 'IT.NET.USER.ZS': 'Infrastructure',
-       'IT.CEL.SETS.P2': 'Infrastructure',
-       'SE.PRM.ENRR': 'Education', 'SE.SEC.ENRR': 'Education',
-       'SP.POP.TOTL': 'Demographics', 'SP.URB.TOTL.IN.ZS': 'Demographics'
-   }
-   df_long['zone'] = df_long['indicator_code'].map(zone_map)
-   ```
-
-### Visualization Recommendations
-
-**Suitable Chart Types by Indicator**:
-
-- **Time Series (Line Charts)**: All indicators, especially for tracking trends
-- **Choropleth Maps**: Percentage indicators (urbanization, internet access, enrollment)
-- **Bar Charts**: Comparing countries within a year, especially GDP and population
-- **Scatter Plots**: Correlation analysis (GDP per capita vs. life expectancy)
-- **Small Multiples**: Comparing indicators across zones
-- **Treemaps**: Hierarchical data (population, GDP)
-
-**Multi-Zone Dashboard Examples**:
-
-1. **Development Overview**: Life expectancy + GDP per capita + internet users (health + economy + infrastructure)
-2. **Sustainability Monitor**: Forest area + renewable energy + urban population (environment + demographics)
-3. **Education Access**: Primary enrollment + secondary enrollment + internet users (education + infrastructure)
+2. **Zone Tagging**: The conversion script adds a "Zone" column (Health, Economy, Environment, Infrastructure, Education, Demographics) to enable thematic grouping.
 
 ## Dataset Provenance
 
@@ -275,69 +168,14 @@ df_long <- df %>%
 - **Tool**: `wbgapi` (World Bank API Python library)
 - **Script**: `extract_wdi.py`
 - **API Version**: World Bank API v2
-- **Extraction Command**: `uv run --with wbgapi --with pandas extract_wdi.py`
+- **Extraction Command**: `uv run WDI_Dataset/extract_wdi.py`
 - **Runtime**: ~15 seconds
-- **Dependencies**: wbgapi, pandas, numpy
+- **Dependencies**: wbgapi, pandas
 
 ### Reproducibility
 
-The dataset can be regenerated using the included `extract_wdi.py` script. Note that values may differ slightly if extracted at a later date due to:
-- Data revisions by national statistical offices
-- Corrections by World Bank data team
-- Updated methodologies for calculated indicators
-
 To reproduce:
 ```bash
-cd WDI_Dataset
-uv run --with wbgapi --with pandas extract_wdi.py
+uv run WDI_Dataset/extract_wdi.py
+uv run WDI_Dataset/convert_to_long.py
 ```
-
-## Limitations
-
-1. **Coverage**: Limited to G20 countries only (19 of 217+ economies in WDI)
-2. **Indicators**: 17 of 1,400+ available indicators (highly selective)
-3. **Timeframe**: 2010-2024 only (excludes historical trends pre-2010)
-4. **Missing Environment Zone Indicator**: CO2 emissions not available
-5. **Data Lag**: Recent years (2022-2024) have incomplete data
-6. **Aggregation**: No regional/income-group aggregates included
-
-## Recommended Extensions
-
-### To Expand Coverage
-
-1. **Add More Countries**: Include regional representatives beyond G20
-   ```python
-   additional_countries = ['NGA', 'KEN', 'VNM', 'PHL', 'EGY', 'PAK']
-   ```
-
-2. **Add Missing CO2 Indicator**: Use alternative sources or codes
-   - Try `EN.ATM.CO2E.KT` (total CO2 in kilotons) and calculate per capita
-   - Use CAIT Climate Data Explorer or EDGAR datasets
-   - Check if indicator code has been updated
-
-3. **Extend Timeframe**: Include 2000-2009 for longer trend analysis
-   ```python
-   range(2000, 2025)
-   ```
-
-4. **Add More Indicators**: Expand zones or add new ones
-   - **Governance**: `CC.EST` (Control of Corruption), `GE.EST` (Government Effectiveness)
-   - **Gender**: `SG.GEN.PARL.ZS` (Women in parliament), `SE.ENR.PRSC.FM.ZS` (Gender parity in education)
-   - **Innovation**: `GB.XPD.RSDV.GD.ZS` (R&D expenditure), `IP.PAT.RESD` (Patent applications)
-
-5. **Add Metadata Columns**: Region, income group, lending category from `WDI_Country.csv`
-
-## References
-
-- **World Bank Data Catalog**: https://datacatalog.worldbank.org/
-- **WDI Database**: https://databank.worldbank.org/source/world-development-indicators
-- **API Documentation**: https://datahelpdesk.worldbank.org/knowledgebase/topics/125589
-- **wbgapi Documentation**: https://github.com/tgherzog/wbgapi
-- **Indicator Methodology**: https://datatopics.worldbank.org/world-development-indicators/
-
-## Change Log
-
-### 2025-12-21 - Initial Extraction
-- Created dataset with 17 indicators, 19 G20 countries, 2010-2024
-- Identified missing CO2 emissions indicator
-- Documented data quality patterns and usage guidelines

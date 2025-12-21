@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 WDI Data Extraction Script
-Extracts 18 core indicators for G20 countries (2010-2024)
+Extracts 18 core indicators for G20 countries (2003-2023)
 """
 
 import wbgapi as wb
@@ -9,7 +9,7 @@ import pandas as pd
 from pathlib import Path
 
 # Configuration
-OUTPUT_FILE = "WDI_G20_2010-2024.csv"
+OUTPUT_FILE = "WDI_Dataset/WDI_G20_2003-2023.csv"
 
 # 18 recommended indicators across 6 thematic zones
 INDICATORS = [
@@ -88,8 +88,8 @@ G20_COUNTRIES = [
 ]
 
 # Timeframe
-START_YEAR = 2010
-END_YEAR = 2024
+START_YEAR = 2003
+END_YEAR = 2023
 
 def main():
     print("=" * 60)
@@ -116,16 +116,52 @@ def main():
         # Reset index to make Country and Year explicit columns
         df = df.reset_index()
 
-        # Rename 'economy' column to 'Country' if it exists
-        if 'economy' in df.columns:
-            df = df.rename(columns={'economy': 'Country'})
-
-        # Rename 'time' column to 'Year' if it exists
-        if 'time' in df.columns:
-            df = df.rename(columns={'time': 'Year'})
-
-        # Rename indicator columns to human-readable names
-        df = df.rename(columns=COLUMN_NAMES)
+        # Rename indicator columns to human-readable names (for wide format if applicable)
+        # Note: wb.data.DataFrame with numericTimeKeys=True returns years as columns
+        
+        # Create a new column with human-readable indicator names from the 'series' column
+        if 'series' in df.columns:
+            df['IndicatorName'] = df['series'].map(COLUMN_NAMES)
+            # We keep 'series' for now as 'IndicatorCode' equivalent or rename it
+        
+        # Explicitly rename columns to be safe and unique
+        cols = list(df.columns)
+        new_cols = []
+        seen_country = 0
+        
+        for col in cols:
+            if col == 'economy':
+                new_cols.append('CountryCode')
+            elif col == 'Country': # wbgapi adds 'Country' as the name
+                # If we encounter 'Country' and we haven't seen one, it might be code or name depending on version
+                # But usually 'economy' is index->column.
+                # Let's handle the standard output from wbgapi labels=True
+                # It usually produces: index(economy), series, Country, Series (names)
+                new_cols.append('CountryName')
+            elif col == 'series':
+                new_cols.append('IndicatorCode')
+            elif col == 'Series':
+                new_cols.append('OriginalIndicatorName')
+            elif col == 'IndicatorName': # The one we added
+                new_cols.append('IndicatorName')
+            else:
+                new_cols.append(str(col))
+        
+        df.columns = new_cols
+        
+        # Drop duplicates if any (e.g. if we have multiple indicator name columns)
+        # Reorder to: CountryCode, CountryName, IndicatorCode, IndicatorName, OriginalIndicatorName, Years...
+        
+        base_cols = ['CountryCode', 'CountryName', 'IndicatorCode', 'IndicatorName', 'OriginalIndicatorName']
+        # Filter to only existing base columns
+        base_cols = [c for c in base_cols if c in df.columns]
+        
+        year_cols = [str(y) for y in range(START_YEAR, END_YEAR + 1)]
+        
+        final_cols = base_cols + year_cols
+        
+        # Select only valid columns
+        df = df[[c for c in final_cols if c in df.columns]]
 
         # Save to CSV
         output_path = Path(OUTPUT_FILE)
